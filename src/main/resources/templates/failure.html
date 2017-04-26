@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Title</title>
+</head>
+<body>
+<form action="/failure" method="post">
+    <div>
+        ******    FAILURE     ******
+        <!--/*@thymesVar id="userName" type=""*/-->
+        <p th:text="'User Name : '+${userName}"></p>
+        <!--/*@thymesVar id="password" type=""*/-->
+        <p th:text="'User Password : '+${password}"></p>
+
+        <input type="submit" name="action" value="LOGIN"/>
+
+
+    </div>
+</form>
+</body>
+</html>
