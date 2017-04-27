@@ -38,7 +38,7 @@ public class RegistrationController {
 
         UserLoginInfoDao.saveUserLoginInfo(userLoginInfo);
 
-        return new ModelAndView("login");
+        return new ModelAndView("dashboard");
 
     }
 

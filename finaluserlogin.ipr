@@ -254,6 +254,20 @@
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
   </component>
   <component name="libraryTable">
+    <library name="httpclient-4.2">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/../httpclient-4.2.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="httpcore-4.2.3">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/httpcore-4.2.3.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
     <library name="Maven: antlr:antlr:2.7.7">
       <CLASSES>
         <root url="jar://$MAVEN_REPOSITORY$/antlr/antlr/2.7.7/antlr-2.7.7.jar!/" />
@@ -340,6 +354,39 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$MAVEN_REPOSITORY$/com/fasterxml/classmate/1.1.0/classmate-1.1.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.google.code.findbugs:jsr305:1.3.9">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/google/code/findbugs/jsr305/1.3.9/jsr305-1.3.9-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.google.guava:guava:15.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/google/guava/guava/15.0/guava-15.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/google/guava/guava/15.0/guava-15.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/google/guava/guava/15.0/guava-15.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: com.twitter:joauth:6.0.2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/twitter/joauth/6.0.2/joauth-6.0.2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/com/twitter/joauth/6.0.2/joauth-6.0.2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/com/twitter/joauth/6.0.2/joauth-6.0.2-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: dom4j:dom4j:1.6.1">

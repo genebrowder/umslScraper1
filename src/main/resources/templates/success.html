@@ -2,20 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>Title</title>
+    <title>UMSL Scraper</title>
 </head>
 <body>
 <form action="/success" method="post">
     <div>
-        SUCESSS!!! You have logged in!
-        <!--/*@thymesVar id="userName" type=""*/-->
-        <p th:text="'User Name : '+${userName}"></p>
-        <!--/*@thymesVar id="password" type=""*/-->
-        <p th:text="'Password : '+${password}"></p>
-        <!--/*@thymesVar id="firstName" type=""*/-->
-        <p th:text="'First Name: '+${firstName}"></p>
-        <!--/*@thymesVar id="lastName" type=""*/-->
-        <p th:text="'Last Name : '+${lastName}"></p>
+        SUCESSS!!! File Written!
 
         <input type="submit" name="action" value="EXIT"/>
 

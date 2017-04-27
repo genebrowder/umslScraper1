@@ -31,7 +31,7 @@ public class FailureController {
         model.asMap().clear();
         session.invalidate();
 
-        return new ModelAndView("login");
+        return new ModelAndView("dashboard");
 
     }
 }

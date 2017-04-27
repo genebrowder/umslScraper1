@@ -18,19 +18,17 @@ public class SuccessController {
     @RequestMapping(value = {"/success"}, method = RequestMethod.GET)
     public ModelAndView success() {
 
-        return new ModelAndView("success");
+        return new ModelAndView("dashboard");
 
     }
     @RequestMapping(value = {"/success"}, method = RequestMethod.POST)
     public ModelAndView successSubmit(HttpSession session, Model model) {
 
-        UserLoginInfo userLoginInfo = (UserLoginInfo) session.getAttribute("userLoginInfo");
-        System.out.println("Ending Session for "+userLoginInfo.getUserName());
 
         model.asMap().clear();
         session.invalidate();
 
-        return new ModelAndView("login");
+        return new ModelAndView("dashboard");
 
     }
 }
