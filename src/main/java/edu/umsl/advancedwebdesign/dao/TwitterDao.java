@@ -10,6 +10,7 @@ import com.twitter.hbc.httpclient.auth.OAuth1;
 import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -37,6 +38,14 @@ public class TwitterDao {
         cb.setOAuthAccessTokenSecret("htsrOxtWR4w8EMBapRBPL0qbAXmkeb9RVWyEfGfLDXuhw" +
                 "");
 
+
+//        cb.setOAuthConsumerKey("zrDOyxH1fJbpGJQ5HoBJtRb09");
+//        cb.setOAuthConsumerSecret("kYpjDvDHsYfaHOHu5kwjt8XDgnN8pmLOyLzR231JgsLEDBLVI0");
+//        cb.setOAuthAccessToken("857887738921701377-2PuuQv4BUBAXw5ybFkE4cXKh1rnm32k");
+//        cb.setOAuthAccessTokenSecret("VXMWksMcEexHl9GdL1UuudLuN7wkwdm5guG3aqXyYVWMe" +
+//                "");
+
+
         if (!searchString.isEmpty()) {
 
 
@@ -50,9 +59,21 @@ public class TwitterDao {
                 query.setCount(100);
 
                 QueryResult result = twitter.search(query);
-                if (result.hasNext()) {
+                if (result.getTweets().size()>0) {
                     for (Status status : result.getTweets()) {
-                        System.out.println("USER:@" + status.getUser().getScreenName() + " , TEXT:" + status.getText() + " , CREATED:" + status.getCreatedAt() + " , LOCATION:" + status.getGeoLocation());
+
+                        GeoLocation location = status.getGeoLocation();
+                        Place place = status.getPlace();
+
+                        System.out.print("USER:@" + status.getUser().getScreenName() + " , TEXT:" + status.getText() + " , CREATED:" + status.getCreatedAt() + " , LOCATION:" + status.getGeoLocation()+", ID: "+ status.getId()+"\n");
+                        if (location != null){
+                            System.out.print(" , Location: " + location.toString()+" , Latitude: " + location.getLatitude()+" , Longitude: " + location.getLongitude()+"\n");
+                        }
+                        if(place != null){
+                            System.out.print(" , Country: "+ place.getCountry()+" , Country Code: " + place.getCountryCode()+" , Place Names: " + place.getName()+" , Place URL: " + place.getURL()+"\n\n");
+                        }
+
+
                     }
                 } else {
                     System.out.println("ERROR!!!!");
@@ -99,9 +120,19 @@ public class TwitterDao {
             query.setCount(100);
 
             QueryResult result = twitter.search(query);
-            if (result.hasNext()) {
+            if (result.getTweets().size()>0) {
                 for (Status status : result.getTweets()) {
-                    System.out.println("USER:@" + status.getUser().getScreenName() + " , TEXT:" + status.getText() + " , CREATED:" + status.getCreatedAt() + " , LOCATION:" + status.getGeoLocation());
+
+                    GeoLocation location = status.getGeoLocation();
+                    Place place = status.getPlace();
+
+                    System.out.print("USER:@" + status.getUser().getScreenName() + " , TEXT:" + status.getText() + " , CREATED:" + status.getCreatedAt() + " , LOCATION:" + status.getGeoLocation()+", ID: "+ status.getId()+"\n");
+                    if (location != null){
+                        System.out.print(" , Location: " + location.toString()+" , Latitude: " + location.getLatitude()+" , Longitude: " + location.getLongitude()+"\n");
+                    }
+                    if(place != null){
+                        System.out.print(" , Country: "+ place.getCountry()+" , Country Code: " + place.getCountryCode()+" , Place Names: " + place.getName()+" , Place URL: " + place.getURL()+"\n\n");
+                    }
                 }
             } else {
                 System.out.println("ERROR!!!!");
@@ -141,10 +172,21 @@ public class TwitterDao {
             Twitter twitter = tf.getInstance();
 
             List statuses = twitter.getUserTimeline(searchString);
+
             if (statuses.size() > 0) {
                 for (int i = 0; i < statuses.size(); i++) {
                     Status status = (Status) statuses.get(i);
-                    System.out.println("USER:@" + status.getUser().getScreenName() + " , TEXT:" + status.getText() + " , CREATED:" + status.getCreatedAt() + " , LOCATION:" + status.getGeoLocation());
+
+                    GeoLocation location = status.getGeoLocation();
+                    Place place = status.getPlace();
+
+                    System.out.print("USER:@" + status.getUser().getScreenName() + " , TEXT:" + status.getText() + " , CREATED:" + status.getCreatedAt() + " , LOCATION:" + status.getGeoLocation()+", ID: "+ status.getId()+"\n");
+                    if (location != null){
+                        System.out.print(" , Location: " + location.toString()+" , Latitude: " + location.getLatitude()+" , Longitude: " + location.getLongitude()+"\n");
+                    }
+                    if(place != null){
+                        System.out.print(" , Country: "+ place.getCountry()+" , Country Code: " + place.getCountryCode()+" , Place Names: " + place.getName()+" , Place URL: " + place.getURL()+"\n\n");
+                    }
                 }
             } else {
                 System.out.println("ERROR!!!!");
@@ -186,7 +228,10 @@ public class TwitterDao {
             if (locations.size() > 0) {
                 System.out.println("Showing available trends");
                 for (Location location : locations) {
-                    System.out.println(location.getName() + " (woeid:" + location.getWoeid() + ")");
+
+                    System.out.print(" Location: " + location.getName() + " ,  Woeid: " + location.getWoeid() +" , Place Names: " + location.getPlaceName());
+                    System.out.print("\n, Country Name: " + location.getCountryName() + ", Place Code: " + location.getPlaceCode()+" , URL: " + location.getURL()+" \n\n");
+
                 }
                 System.out.println("done.");
             } else {
