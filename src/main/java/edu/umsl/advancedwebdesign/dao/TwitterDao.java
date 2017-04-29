@@ -9,6 +9,11 @@ import com.twitter.hbc.httpclient.auth.Authentication;
 import com.twitter.hbc.httpclient.auth.OAuth1;
 import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -55,26 +60,13 @@ public class TwitterDao {
                 Twitter twitter = tf.getInstance();
 
                 Query query = new Query(searchString);
-                query.setLang("english");
+                query.setLang("en");
                 query.setCount(100);
+
 
                 QueryResult result = twitter.search(query);
                 if (result.getTweets().size()>0) {
-                    for (Status status : result.getTweets()) {
-
-                        GeoLocation location = status.getGeoLocation();
-                        Place place = status.getPlace();
-
-                        System.out.print("USER:@" + status.getUser().getScreenName() + " , TEXT:" + status.getText() + " , CREATED:" + status.getCreatedAt() + " , LOCATION:" + status.getGeoLocation()+", ID: "+ status.getId()+"\n");
-                        if (location != null){
-                            System.out.print(" , Location: " + location.toString()+" , Latitude: " + location.getLatitude()+" , Longitude: " + location.getLongitude()+"\n");
-                        }
-                        if(place != null){
-                            System.out.print(" , Country: "+ place.getCountry()+" , Country Code: " + place.getCountryCode()+" , Place Names: " + place.getName()+" , Place URL: " + place.getURL()+"\n\n");
-                        }
-
-
-                    }
+                    writeToFile("twitterQueryByString",result);
                 } else {
                     System.out.println("ERROR!!!!");
                     return false;
@@ -121,19 +113,7 @@ public class TwitterDao {
 
             QueryResult result = twitter.search(query);
             if (result.getTweets().size()>0) {
-                for (Status status : result.getTweets()) {
-
-                    GeoLocation location = status.getGeoLocation();
-                    Place place = status.getPlace();
-
-                    System.out.print("USER:@" + status.getUser().getScreenName() + " , TEXT:" + status.getText() + " , CREATED:" + status.getCreatedAt() + " , LOCATION:" + status.getGeoLocation()+", ID: "+ status.getId()+"\n");
-                    if (location != null){
-                        System.out.print(" , Location: " + location.toString()+" , Latitude: " + location.getLatitude()+" , Longitude: " + location.getLongitude()+"\n");
-                    }
-                    if(place != null){
-                        System.out.print(" , Country: "+ place.getCountry()+" , Country Code: " + place.getCountryCode()+" , Place Names: " + place.getName()+" , Place URL: " + place.getURL()+"\n\n");
-                    }
-                }
+                writeToFile("twitterQueryByHashTag",result);
             } else {
                 System.out.println("ERROR!!!!");
                 return false;
@@ -174,20 +154,7 @@ public class TwitterDao {
             List statuses = twitter.getUserTimeline(searchString);
 
             if (statuses.size() > 0) {
-                for (int i = 0; i < statuses.size(); i++) {
-                    Status status = (Status) statuses.get(i);
-
-                    GeoLocation location = status.getGeoLocation();
-                    Place place = status.getPlace();
-
-                    System.out.print("USER:@" + status.getUser().getScreenName() + " , TEXT:" + status.getText() + " , CREATED:" + status.getCreatedAt() + " , LOCATION:" + status.getGeoLocation()+", ID: "+ status.getId()+"\n");
-                    if (location != null){
-                        System.out.print(" , Location: " + location.toString()+" , Latitude: " + location.getLatitude()+" , Longitude: " + location.getLongitude()+"\n");
-                    }
-                    if(place != null){
-                        System.out.print(" , Country: "+ place.getCountry()+" , Country Code: " + place.getCountryCode()+" , Place Names: " + place.getName()+" , Place URL: " + place.getURL()+"\n\n");
-                    }
-                }
+                writeToFile("twitterQueryByHashTag",statuses);
             } else {
                 System.out.println("ERROR!!!!");
                 return false;
@@ -257,52 +224,6 @@ public class TwitterDao {
         }
     }
 
-//    public void twitterQueryByLocation() {
-//
-//        ConfigurationBuilder cb = new ConfigurationBuilder();
-//        cb.setDebugEnabled(true);
-//        cb.setOAuthConsumerKey("qqgZF7wU3G75gfVbngbTw7Xnz");
-//        cb.setOAuthConsumerSecret("8ZxBqLVYAv7O8qVdtm3j3V5MyguiRNBrJR19P0smGqRdSYcMMs");
-//        cb.setOAuthAccessToken("16372575-LlMZrcBd3sE2CezunLLyHnBbODclZi30RGclPC8ZJ");
-//        cb.setOAuthAccessTokenSecret("htsrOxtWR4w8EMBapRBPL0qbAXmkeb9RVWyEfGfLDXuhw" +
-//                "");
-//
-//
-//
-//        try {
-//
-//            TwitterFactory tf = new TwitterFactory(cb.build());
-//            Twitter twitter = tf.getInstance();
-//
-//            Place place = twitter.getGeoDetails("St.Louis, MO");
-//            System.out.println("name: " + place.getName());
-//            System.out.println("country: " + place.getCountry());
-//            System.out.println("country code: " + place.getCountryCode());
-//            System.out.println("full name: " + place.getFullName());
-//            System.out.println("id: " + place.getId());
-//            System.out.println("place type: " + place.getPlaceType());
-//            System.out.println("street address: " + place.getStreetAddress());
-//            Place[] containedWithinArray = place.getContainedWithIn();
-//            if (containedWithinArray != null && containedWithinArray.length != 0) {
-//                System.out.println("  contained within:");
-//                for (Place containedWithinPlace : containedWithinArray) {
-//                    System.out.println("  id: " + containedWithinPlace.getId() + " name: " + containedWithinPlace.getFullName());
-//                }
-//            }
-//
-//
-//
-//        } catch (TwitterException te) {
-//            te.printStackTrace();
-//            System.out.println("Failed to search tweets: " + te.getMessage());
-//
-//        }catch (Exception e) {
-//            e.printStackTrace();
-//            System.out.println("Error: " + e.getMessage());
-//
-//        }
-//    }
-
 
     public String getSearchString() {
         return searchString;
@@ -350,7 +271,8 @@ public class TwitterDao {
                     return false;
                 }
 
-                String msg = queue.poll(5, TimeUnit.SECONDS);
+
+                 String msg = queue.poll(5, TimeUnit.SECONDS);
                 if (msg == null) {
                     System.out.println("Did not receive a message in 5 seconds");
                 } else {
@@ -377,6 +299,200 @@ public class TwitterDao {
 
             return false;
 
+
+        }
+
+    }
+
+//    public Boolean twitterQueryByStream() throws InterruptedException {
+//        try {
+//            ConfigurationBuilder cb = new ConfigurationBuilder();
+//            cb.setDebugEnabled(true);
+//            String consumerKey = "qqgZF7wU3G75gfVbngbTw7Xnz";
+//            String consumerSecret = "8ZxBqLVYAv7O8qVdtm3j3V5MyguiRNBrJR19P0smGqRdSYcMMs";
+//            String token = "16372575-LlMZrcBd3sE2CezunLLyHnBbODclZi30RGclPC8ZJ";
+//            String secret = "htsrOxtWR4w8EMBapRBPL0qbAXmkeb9RVWyEfGfLDXuhw";
+//
+//            try {
+//                TwitterStreamFactory tsf = new TwitterStreamFactory(cb.build());
+//                TwitterStream twitterStream = tsf.getInstance();
+//
+//                StatusListener listener = new StatusListener(){
+//
+//                    @Override
+//                    public void onException(Exception e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onStatus(Status status) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onDeletionNotice(StatusDeletionNotice statusDeletionNotice) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onTrackLimitationNotice(int i) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onScrubGeo(long l, long l1) {
+//
+//                    }
+//                }
+//                ResponseList<Location> locations;
+//                locations = twitter.getAvailableTrends();
+//                if (locations.size() > 0) {
+//                    System.out.println("Showing available trends");
+//                    for (Location location : locations) {
+//
+//                        System.out.print(" Location: " + location.getName() + " ,  Woeid: " + location.getWoeid() + " , Place Names: " + location.getPlaceName());
+//                        System.out.print("\n, Country Name: " + location.getCountryName() + ", Place Code: " + location.getPlaceCode() + " , URL: " + location.getURL() + " \n\n");
+//
+//                    }
+//                    System.out.println("done.");
+//                } else {
+//                    System.out.println("ERROR!!!!");
+//                    return false;
+//                }
+//
+//                return true;
+//
+//            } catch (TwitterException te) {
+//                te.printStackTrace();
+//                System.out.println("Failed to search tweets: " + te.getMessage());
+//
+//                return false;
+//
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                System.out.println("Error: " + e.getMessage());
+//
+//                return false;
+//
+//            }
+//        }
+//    }
+//
+    public void writeToFile(String method,QueryResult result) {
+
+        String filename;
+
+        BufferedWriter bw = null;
+        FileWriter fw = null;
+
+        try {
+
+            SimpleDateFormat sdfDate = new SimpleDateFormat("_yyyy_MM_dd_HH_mm_ss");
+            Date now = new Date();
+            String strDate = sdfDate.format(now);
+
+            filename = method+strDate+".csv";
+
+            fw = new FileWriter(filename);
+            bw = new BufferedWriter(fw);
+
+            String column_headers = "twitter_message_id,creation date,user,text";
+
+            bw.write(column_headers);
+
+            bw.newLine();
+
+            for (Status status : result.getTweets()) {
+
+                String text = status.getText();
+                text = text.replace("\n", "").replace("\r", "");
+                String content = status.getId() + "," + status.getCreatedAt() + "," + "@" + status.getUser().getScreenName() + "," + text;
+
+
+                bw.write(content);
+                bw.newLine();
+            }
+
+            System.out.println("Done");
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            try {
+
+                if (bw != null)
+                    bw.close();
+
+                if (fw != null)
+                    fw.close();
+
+            } catch (IOException ex) {
+
+                ex.printStackTrace();
+
+            }
+
+        }
+
+    }
+
+    public void writeToFile(String method,List statuses) {
+
+        String filename;
+
+        BufferedWriter bw = null;
+        FileWriter fw = null;
+
+        try {
+
+            SimpleDateFormat sdfDate = new SimpleDateFormat("_yyyy_MM_dd_HH_mm_ss");
+            Date now = new Date();
+            String strDate = sdfDate.format(now);
+
+            filename = method+strDate+".csv";
+
+            fw = new FileWriter(filename);
+            bw = new BufferedWriter(fw);
+
+            String column_headers = "twitter_message_id,creation date,user,text";
+            bw.write(column_headers);
+            bw.newLine();
+
+            for (int i = 0; i < statuses.size(); i++) {
+                Status status = (Status) statuses.get(i);
+                String text = status.getText();
+                text = text.replace("\n", "").replace("\r", "");
+                String content = status.getId() + "," + status.getCreatedAt() + "," + "@" + status.getUser().getScreenName() + "," + text;
+
+
+                bw.write(content);
+                bw.newLine();
+            }
+
+            System.out.println("Done");
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+
+        } finally {
+
+            try {
+
+                if (bw != null)
+                    bw.close();
+
+                if (fw != null)
+                    fw.close();
+
+            } catch (IOException ex) {
+
+                ex.printStackTrace();
+
+            }
 
         }
 
