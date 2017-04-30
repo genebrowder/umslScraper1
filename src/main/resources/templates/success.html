@@ -8,7 +8,7 @@
 <form action="/success" method="post">
     <div>
         SUCESSS!!! File Written!
-
+        <p th:text="'Filename : '+${fileName}"></p>
         <input type="submit" name="action" value="HOME"/>
 
     </div>

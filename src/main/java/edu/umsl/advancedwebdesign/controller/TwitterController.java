@@ -29,6 +29,9 @@ public class TwitterController {
         System.out.println("searchType = " + searchType);
 
         ModelAndView mav = null;
+
+        String[] filename = new String[1];
+        filename[0]="";
         try {
 
 
@@ -36,9 +39,14 @@ public class TwitterController {
                 TwitterDao ta = new TwitterDao();
                 String searchString = request.getParameter("searchByString");
                 ta.setSearchString(searchString);
-                if(ta.twitterQueryByString())
+
+
+
+                if(ta.twitterQueryByString(filename))
                 {
+                    System.out.println("Filename ="+filename[0]);
                     mav = new ModelAndView("success");
+                    mav.addObject("fileName", filename[0]);
                 }else{
                     mav = new ModelAndView("failure");
                 }
@@ -50,8 +58,11 @@ public class TwitterController {
                 String searchString = request.getParameter("searchByHashTag");
                 ta.setSearchString(searchString);
 
-                if (ta.twitterQueryByHashTag()) {
+
+                if (ta.twitterQueryByHashTag(filename)) {
+                    System.out.println("Filename ="+filename[0]);
                     mav = new ModelAndView("success");
+                    mav.addObject("fileName", filename[0]);
                 } else {
                     mav = new ModelAndView("failure");
                 }
@@ -64,8 +75,11 @@ public class TwitterController {
                 String searchString = request.getParameter("searchByTwitterHandle");
                 ta.setSearchString(searchString);
 
-                if(ta.twitterQueryByTwitterHandle()){
+
+                if(ta.twitterQueryByTwitterHandle(filename)){
+                    System.out.println("Filename ="+filename[0]);
                     mav = new ModelAndView("success");
+                    mav.addObject("fileName", filename[0]);
                 }else{
                     mav = new ModelAndView("failure");
                 }
@@ -74,8 +88,11 @@ public class TwitterController {
             } else if (searchType.equals("Search_By_DataStream")) {
                 TwitterDao ta = new TwitterDao();
 
+
                 if(ta.twitterQueryByDataStream()){
+                    System.out.println("Filename ="+filename[0]);
                     mav = new ModelAndView("success");
+                    mav.addObject("fileName", filename[0]);
                 }else{
                     mav = new ModelAndView("failure");
                 }
@@ -83,8 +100,11 @@ public class TwitterController {
             } else if (searchType.equals("Search_By_Trending")) {
                 TwitterDao ta = new TwitterDao();
 
-                if(ta.twitterQueryByTrends()){
+
+                if(ta.twitterQueryByTrends(filename)){
+                    System.out.println("Filename ="+filename[0]);
                     mav = new ModelAndView("success");
+                    mav.addObject("fileName", filename[0]);
                 }else{
                     mav = new ModelAndView("failure");
                 }

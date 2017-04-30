@@ -33,7 +33,7 @@ public class TwitterDao {
     String searchString = "";
 
 
-    public Boolean twitterQueryByString() {
+    public Boolean twitterQueryByString(String[] filename) {
 
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true);
@@ -66,7 +66,7 @@ public class TwitterDao {
 
                 QueryResult result = twitter.search(query);
                 if (result.getTweets().size()>0) {
-                    writeToFile("twitterQueryByString",result);
+                    filename[0] = writeToFile("twitterQueryByString",result);
                 } else {
                     System.out.println("ERROR!!!!");
                     return false;
@@ -91,7 +91,7 @@ public class TwitterDao {
         }
     }
 
-    public Boolean twitterQueryByHashTag() {
+    public Boolean twitterQueryByHashTag(String[] filename) {
 
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true);
@@ -113,7 +113,7 @@ public class TwitterDao {
 
             QueryResult result = twitter.search(query);
             if (result.getTweets().size()>0) {
-                writeToFile("twitterQueryByHashTag",result);
+                filename[0] = writeToFile("twitterQueryByHashTag",result);
             } else {
                 System.out.println("ERROR!!!!");
                 return false;
@@ -135,7 +135,7 @@ public class TwitterDao {
         }
     }
 
-    public Boolean twitterQueryByTwitterHandle() {
+    public Boolean twitterQueryByTwitterHandle(String[] filename) {
 
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true);
@@ -154,7 +154,7 @@ public class TwitterDao {
             List statuses = twitter.getUserTimeline(searchString);
 
             if (statuses.size() > 0) {
-                writeToFile("twitterQueryByHashTag",statuses);
+                filename[0] = writeToFile("twitterQueryByHashTag",statuses);
             } else {
                 System.out.println("ERROR!!!!");
                 return false;
@@ -178,7 +178,7 @@ public class TwitterDao {
         }
     }
 
-    public Boolean twitterQueryByTrends() {
+    public Boolean twitterQueryByTrends(String[] filename) {
         ConfigurationBuilder cb = new ConfigurationBuilder();
         cb.setDebugEnabled(true);
         cb.setOAuthConsumerKey("qqgZF7wU3G75gfVbngbTw7Xnz");
@@ -304,7 +304,7 @@ public class TwitterDao {
 
     }
 
-//    public Boolean twitterQueryByStream() throws InterruptedException {
+//    public Boolean twitterQueryByStream(String[] filename) throws InterruptedException {
 //        try {
 //            ConfigurationBuilder cb = new ConfigurationBuilder();
 //            cb.setDebugEnabled(true);
@@ -378,9 +378,9 @@ public class TwitterDao {
 //        }
 //    }
 //
-    public void writeToFile(String method,QueryResult result) {
+    public String writeToFile(String method,QueryResult result) {
 
-        String filename;
+        String filename="";
 
         BufferedWriter bw = null;
         FileWriter fw = null;
@@ -415,6 +415,8 @@ public class TwitterDao {
 
             System.out.println("Done");
 
+
+
         } catch (IOException e) {
 
             e.printStackTrace();
@@ -437,11 +439,13 @@ public class TwitterDao {
 
         }
 
+         return filename;
+
     }
 
-    public void writeToFile(String method,List statuses) {
+    public String writeToFile(String method,List statuses) {
 
-        String filename;
+        String filename="";
 
         BufferedWriter bw = null;
         FileWriter fw = null;
@@ -496,7 +500,11 @@ public class TwitterDao {
 
         }
 
+        return filename;
+
     }
+
+
 
 }
 
