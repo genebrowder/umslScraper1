@@ -85,18 +85,6 @@ public class TwitterController {
                 }
 
 
-            } else if (searchType.equals("Search_By_DataStream")) {
-                TwitterDao ta = new TwitterDao();
-
-
-                if(ta.twitterQueryByDataStream(filename)){
-                    System.out.println("Filename ="+filename[0]);
-                    mav = new ModelAndView("success");
-                    mav.addObject("fileName", filename[0]);
-                }else{
-                    mav = new ModelAndView("failure");
-                }
-
             } else if (searchType.equals("Search_By_Trending")) {
                 TwitterDao ta = new TwitterDao();
 
