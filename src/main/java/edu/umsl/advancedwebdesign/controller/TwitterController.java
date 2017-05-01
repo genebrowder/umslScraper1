@@ -89,7 +89,7 @@ public class TwitterController {
                 TwitterDao ta = new TwitterDao();
 
 
-                if(ta.twitterQueryByDataStream()){
+                if(ta.twitterQueryByDataStream(filename)){
                     System.out.println("Filename ="+filename[0]);
                     mav = new ModelAndView("success");
                     mav.addObject("fileName", filename[0]);
