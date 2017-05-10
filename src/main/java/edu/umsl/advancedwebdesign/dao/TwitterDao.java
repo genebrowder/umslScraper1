@@ -155,35 +155,40 @@ public class TwitterDao {
                 "");
 
 
-        try {
+        if (!searchString.isEmpty()) {
 
-            TwitterFactory tf = new TwitterFactory(cb.build());
-            Twitter twitter = tf.getInstance();
+            try {
 
-            List statuses = twitter.getUserTimeline(searchString);
+                TwitterFactory tf = new TwitterFactory(cb.build());
+                Twitter twitter = tf.getInstance();
 
-            if (statuses.size() > 0) {
-                filename[0] = writeToFile("twitterQueryByTwitterHandle",statuses);
-            } else {
-                System.out.println("ERROR!!!!");
+                List statuses = twitter.getUserTimeline(searchString);
+
+                if (statuses.size() > 0) {
+                    filename[0] = writeToFile("twitterQueryByTwitterHandle",statuses);
+                } else {
+                    System.out.println("ERROR!!!!");
+                    return false;
+                }
+
+                return true;
+
+            } catch (TwitterException te) {
+                te.printStackTrace();
+                System.out.println("Failed to search tweets: " + te.getMessage());
+
                 return false;
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("Error: " + e.getMessage());
+
+                return false;
+
+
             }
-
-            return true;
-
-        } catch (TwitterException te) {
-            te.printStackTrace();
-            System.out.println("Failed to search tweets: " + te.getMessage());
-
-            return false;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.out.println("Error: " + e.getMessage());
-
-            return false;
-
-
+        } else {
+        return false;
         }
     }
 

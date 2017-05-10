@@ -30,8 +30,8 @@ public class DashboardController {
 
         ModelAndView mav = null;
 
-        if (submitType.equals("Facebook")) {
-            mav = new ModelAndView("searchFacebook");
+        if (submitType.equals("Reddit")) {
+            mav = new ModelAndView("searchReddit");
 
         } else if (submitType.equals("Twitter")) {
             mav = new ModelAndView("searchTwitter");
